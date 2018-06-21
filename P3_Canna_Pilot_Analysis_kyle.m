@@ -36,6 +36,12 @@ for i_sub = 1:nsubs
              EEG.data(x,:) = (EEG.data(x,:)-((EEG.data(EEG.nbchan-2,:))*.5));
          end
 
+
+%        Filter the data with low pass of 30
+       EEG = pop_eegfilt( EEG, .1, 0, [], 0);  %high pass filter
+       EEG = pop_eegfilt( EEG, 0, 30, [], 0);  %low pass filter
+       
+       
         %change markers so they can be used by the gratton_emcp script
         for i_event = 3:length(EEG.event)
             EEG.event(i_event).type = (EEG.event(i_event).type(end));
@@ -52,7 +58,7 @@ for i_sub = 1:nsubs
 
 
         %    Artifact rejection, trials with range >500 uV
-        EEG = pop_eegthresh(EEG,1,[1:size(EEG.data,1)],-750,750,EEG.xmin,EEG.xmax,0,1);
+        EEG = pop_eegthresh(EEG,1,[1:size(EEG.data,1)],-500, 500,EEG.xmin,EEG.xmax,0,1); %changed to 500. D.R.
         
         %   EMCP occular correction          
         temp_ocular = EEG.data(end-1:end,:,:); %to save the EYE data for after
@@ -63,7 +69,8 @@ for i_sub = 1:nsubs
         %check 80,85,90 i_sub = 6; 95, 100, 105; 110, 115, 120
          %    Artifact rejection, trials with range >250 uV
         EEG = pop_rmbase( EEG, [-200 0]); %baseline again since this changed it
-         EEG = pop_eegthresh(EEG,1,[1:size(EEG.data,1)],-500,500,EEG.xmin,EEG.xmax,0,1);
+         
+         EEG = pop_eegthresh(EEG,1,[1:size(EEG.data,1)],-200,200,EEG.xmin,EEG.xmax,0,1); % CHANGED TO 200. D.R.
 
         [ALLEEG EEG CURRENTSET] =   pop_newset(ALLEEG, EEG, 3, 'setname', sprintf('%s corrected', setname), 'gui', 'off'); %replace the stored data with this new set
 
