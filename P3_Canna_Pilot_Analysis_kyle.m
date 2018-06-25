@@ -22,7 +22,7 @@ for i_sub = 1:nsubs
         
         Filename = [subs{i_sub} '_' exp '_' conds{i_cond} '.vhdr'];
         % [Filename,Pathname] = uigetfile('\\MATHEWSON\Lab_Files\Data\P300\*.vhdr')
-        setname = Filename(1:end-5)
+        setname = Filename(1:end-5) 
         
         EEG = pop_loadbv(Pathname, Filename);
         [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 0,'setname',setname,'gui','off');
