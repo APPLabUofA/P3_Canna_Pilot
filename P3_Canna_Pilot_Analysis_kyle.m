@@ -6,7 +6,7 @@ ccc
 
 exp = 'P3_Canna_Pilot';
 subs = {'001';'002';'003'; '005'; '006'};
-%subs = {'001';'002'}; %to test on just one sub
+%subs = {'001'}; %to test on just one sub
 
 nsubs = length(subs);
 conds = {'Pre';'Post'};
