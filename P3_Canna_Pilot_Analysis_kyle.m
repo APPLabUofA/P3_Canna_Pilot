@@ -28,7 +28,7 @@ for i_sub = 1:nsubs
         [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 0,'setname',setname,'gui','off');
         
         % get electrode locatoins
-        EEG=pop_chanedit(EEG, 'load',{'M:\Analysis\VR_P3\BrainAMP_EOG_VR.ced' 'filetype' 'autodetect'});
+        EEG=pop_chanedit(EEG, 'load',{'M:\Analysis\P3 Canna Pilot 2\cannapilot_32channel_EOG.ced' 'filetype' 'autodetect'});
         EEG = eeg_checkset( EEG );
         
         % arithmetically rereference to linked mastoid
