@@ -2,7 +2,7 @@ clear all
 close all
 
 exp = 'P3_Canna_Pilot';
-subs = {'001';'002'; '003'};
+subs = {'001';'002'; '003'; '005'; '006'};
 % subs = {'006';'007'}; %to test on just one sub 
 
 nsubs = length(subs);
@@ -132,8 +132,8 @@ subplot(2,1,2);
  %difference topographys
 time_window = find(EEG.times>250,1)-1:find(EEG.times>450,1)-2;
 figure('Color',[1 1 1]);
-for i_cond = 1:3
-    subplot(1,3,i_cond);
+for i_cond = 1:2
+    subplot(1,2,i_cond);
        set(gca,'Color',[1 1 1]);
         temp = mean(mean(erp_diff_out(time_window,:,i_cond,:),4),1)';
         temp(16:18) = NaN;

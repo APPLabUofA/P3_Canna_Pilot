@@ -32,13 +32,13 @@ for i_sub = 1:nsubs
         EEG = eeg_checkset( EEG );
         
         % arithmetically rereference to linked mastoid
-        for x=1:EEG.nbchan-2
-            EEG.data(x,:) = (EEG.data(x,:)-((EEG.data(EEG.nbchan-2,:))*.5));
+        for non_refdata=2:EEG.nbchan
+            EEG.data(non_refdata) = (EEG.data(non_refdata)-((EEG.data(1))*.5));
         end
         
-        %        Filter the data with low pass of 30
-        EEG = pop_eegfilt( EEG, .1, 0, [], 0);  %high pass filter
-        EEG = pop_eegfilt( EEG, 0, 30, [], 0);  %low pass filter
+%         %        Filter the data with low pass of 30
+%         EEG = pop_eegfilt( EEG, .1, 0, [], 0);  %high pass filter
+%         EEG = pop_eegfilt( EEG, 0, 30, [], 0);  %low pass filter
         
         %change markers so they can be used by the gratton_emcp script
         for i_event = 3:length(EEG.event)
