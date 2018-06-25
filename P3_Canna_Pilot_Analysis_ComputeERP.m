@@ -1,9 +1,10 @@
 clear all
 close all
+ccc
 
 exp = 'P3_Canna_Pilot';
 subs = {'001';'002'; '003'; '005'; '006'};
-% subs = {'006';'007'}; %to test on just one sub 
+%subs = {'006'}; %to test on just one sub 
 
 nsubs = length(subs);
 conds =  {'Pre';'Post'};
@@ -100,7 +101,7 @@ subplot(2,1,1);
         line('XData', [180 180], 'YData', [9.25 -7], 'LineStyle', '-','LineWidth', 2, 'Color','m')
         line('XData', [275 275], 'YData', [9.25 -7], 'LineStyle', '-','LineWidth', 2, 'Color','m')
         
-        legend('In','Out','Location','SouthEast'); 
+        legend('Pre','Post','Location','SouthEast'); 
        
         axis tight; ylim([-5 9]);
         line([-200 1000],[0 0],'color','k');
@@ -120,7 +121,7 @@ subplot(2,1,2);
         line('XData', [180 180], 'YData', [9.25 -7], 'LineStyle', '-','LineWidth', 2, 'Color','m')
         line('XData', [275 275], 'YData', [9.25 -7], 'LineStyle', '-','LineWidth', 2, 'Color','m')
         
-        legend('In','Out','Location','SouthEast'); 
+        legend('Pre','Post','Location','SouthEast'); 
        
         axis tight; ylim([-5 9]);
         line([-200 1000],[0 0],'color','k');
@@ -143,24 +144,24 @@ for i_cond = 1:2
         set(get(t,'ylabel'),'String', 'Voltage Difference (uV)');
 
 end
+%%
 
-
-for i_set = 1:48; trial_count(i_set) = ALLEEG(i_set).trials; end
-trial_count = reshape(trial_count,[2,3,8]);
-min(trial_count,[],3)
-mean(trial_count,3)
-max(trial_count,[],3)
-
-%mean and sd
-mean(mean(erp_diff_out(time_window,7,1:3,:),1),4)
-std(mean(erp_diff_out(time_window,7,1:3,:),1),[],4)
-
-
-
-% ttest of each condition
-[h p ci stat] = ttest(squeeze(mean(erp_diff_out(time_window,7,1,:),1)),0,.05,'right',1)
-[h p ci stat] = ttest(squeeze(mean(erp_diff_out(time_window,7,2,:),1)),0,.05,'right',1)
-[h p ci stat] = ttest(squeeze(mean(erp_diff_out(time_window,7,3,:),1)),0,.05,'right',1)
+% for i_set = 1:48; trial_count(i_set) = ALLEEG(i_set).trials; end
+% trial_count = reshape(trial_count,[2,3,8]);
+% min(trial_count,[],3)
+% mean(trial_count,3)
+% max(trial_count,[],3)
+% 
+% %mean and sd
+% mean(mean(erp_diff_out(time_window,7,1:3,:),1),4)
+% std(mean(erp_diff_out(time_window,7,1:3,:),1),[],4)
+% 
+% 
+% 
+% % ttest of each condition
+% [h p ci stat] = ttest(squeeze(mean(erp_diff_out(time_window,7,1,:),1)),0,.05,'right',1)
+% [h p ci stat] = ttest(squeeze(mean(erp_diff_out(time_window,7,2,:),1)),0,.05,'right',1)
+% [h p ci stat] = ttest(squeeze(mean(erp_diff_out(time_window,7,3,:),1)),0,.05,'right',1)
 
 %plot difference
 %uncorrected
