@@ -1,7 +1,7 @@
 clear all
 close all
 ccc
-
+%
 exp = 'P3_Canna_Pilot';
 subs = {'001';'002'; '003'; '005'; '006'};
 %subs = {'006'}; %to test on just one sub 
