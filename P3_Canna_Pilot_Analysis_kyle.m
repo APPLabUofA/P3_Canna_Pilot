@@ -10,7 +10,7 @@ subs = {'001';'002';'003';'005'; '006'};
 
 nsubs = length(subs);
 conds = {'Pre';'Post'};
-Pathname = 'M:\Data\P3_Canna_Pilot\';
+Pathname = 'M:\Data\P3_Canna_Pilot\'; 
 
 if ~exist([Pathname 'segments\'])
     mkdir([Pathname 'segments\']);

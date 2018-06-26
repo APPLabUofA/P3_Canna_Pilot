@@ -6,7 +6,7 @@ exp = 'P3_Canna_Pilot';
 subs = {'001';'002'; '003'; '005'; '006'};
 %subs = {'006'}; %to test on just one sub 
 
-nsubs = length(subs);
+nsubs = length(subs); 
 conds =  {'Pre';'Post'};
 nconds = length(conds);
 Pathname = 'M:\Data\P3_Canna_Pilot\';
