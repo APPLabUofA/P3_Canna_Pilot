@@ -88,4 +88,4 @@ for i_sub = 1:nsubs
         
     end %i_cond
 end %i_sub
-%
+eeglab redraw %refresh the screen so you can see all the data you just finished working on
