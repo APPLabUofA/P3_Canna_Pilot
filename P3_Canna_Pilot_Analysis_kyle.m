@@ -65,10 +65,8 @@ for i_sub = 1:nsubs
         EEG = gratton_emcp(EEG,selection_cards,{'VEOG'},{'HEOG'}); %this assumes the eye channels are called this
         EEG.emcp.table %this prints out the regression coefficients
         EEG.data(end-1:end,:,:) = temp_ocular; %replace the eye data
-        %check 80,85,90 i_sub = 6; 95, 100, 105; 110, 115, 120
         %    Artifact rejection, trials with range >250 uV
         EEG = pop_rmbase( EEG, [-200 0]); %baseline again since this changed it
-        
         
         EEG = pop_eegthresh(EEG,1,[1:size(EEG.data,1)],-200,200,EEG.xmin,EEG.xmax,0,1); % CHANGED TO 200. D.R.
         
