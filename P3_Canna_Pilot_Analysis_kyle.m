@@ -61,26 +61,27 @@ for i_sub = 1:nsubs
         
         %   EMCP occular correction
         temp_ocular = EEG.data(end-1:end,:,:); %to save the EYE data for after
-        selection_cards = {'1','2 3 4 5' }; %different bin names, each condition should be separate
-        EEG = gratton_emcp(EEG,selection_cards,{'VEOG'},{'HEOG'}); %this assumes the eye channels are called this
+        selection_cards = {'1','2 3 4 5' }; %different bin names, each condition should be separated by commas
+        EEG = gratton_emcp(EEG,selection_cards,{'VEOG'},{'HEOG'}); %this assumes the eye channels are called the titles given here
         EEG.emcp.table %this prints out the regression coefficients
         EEG.data(end-1:end,:,:) = temp_ocular; %replace the eye data
         %    Artifact rejection, trials with range >250 uV
         EEG = pop_rmbase( EEG, [-200 0]); %baseline again since this changed it
         
-        EEG = pop_eegthresh(EEG,1,[1:size(EEG.data,1)],-200,200,EEG.xmin,EEG.xmax,0,1); % CHANGED TO 200. D.R.
+        EEG = pop_eegthresh(EEG,1,[1:size(EEG.data,1)],-200,200,EEG.xmin,EEG.xmax,0,1); % CHANGED TO 200. D.R., more strict than previous artifact rejection
         
+        % creating new set for preprocessed clean data, targets and
+        % standards included
         [ALLEEG EEG CURRENTSET] =   pop_newset(ALLEEG, EEG, 3, 'setname', sprintf('%s corrected', setname), 'gui', 'off'); %replace the stored data with this new set
-        
         
         tempEEG =   EEG;
         
-        %now select the corrected trials
+        %now select the corrected trials for targets
         EEG = pop_selectevent( tempEEG, 'type',1,'renametype','Target','deleteevents','on','deleteepochs','on','invertepochs','off');
         EEG = pop_editset(EEG, 'setname',[subs{i_sub} '_' exp '_' conds{i_cond} '_Corrected_Target']);
         EEG = pop_saveset( EEG, 'filename',[subs{i_sub} '_' exp '_' conds{i_cond} '_Corrected_Target.set'],'filepath',[Pathname 'segments\']);
         
-        
+        %now select the corrected trials for standards
         EEG = pop_selectevent( tempEEG, 'type',[2:5] ,'renametype','Standard','deleteevents','on','deleteepochs','on','invertepochs','off');
         EEG = pop_editset(EEG, 'setname',[subs{i_sub} '_' exp '_' conds{i_cond} '_Corrected_Standard']);
         EEG = pop_saveset( EEG, 'filename',[subs{i_sub} '_' exp '_' conds{i_cond} '_Corrected_Standard.set'],'filepath',[Pathname 'segments\']);
