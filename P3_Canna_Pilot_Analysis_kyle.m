@@ -10,7 +10,7 @@ subs = {'001';'002';'003';'005'; '006'};
 
 nsubs = length(subs);
 conds = {'Pre';'Post'};
-Pathname = 'M:\Data\P3_Canna_Pilot\'; 
+Pathname = 'M:\Data\P3_Canna_Pilot\';
 
 if ~exist([Pathname 'segments\'])
     mkdir([Pathname 'segments\']);
@@ -22,7 +22,7 @@ for i_sub = 1:nsubs
         
         Filename = [subs{i_sub} '_' exp '_' conds{i_cond} '.vhdr'];
         % [Filename,Pathname] = uigetfile('\\MATHEWSON\Lab_Files\Data\P300\*.vhdr')
-        setname = Filename(1:end-5) 
+        setname = Filename(1:end-5)
         
         EEG = pop_loadbv(Pathname, Filename);
         [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 0,'setname',setname,'gui','off');
@@ -32,18 +32,13 @@ for i_sub = 1:nsubs
         EEG = eeg_checkset( EEG );
         
         % arithmetically rereference to linked mastoid
-                
-        for non_refdata=1:EEG.nbchan-2
-            EEG.data(non_refdata) = (EEG.data(non_refdata)-((EEG.data(1))*.5));
+        %Adding a variable to specify the mastoid
+        
+        other_mastoid_chan_number = 1;
+        for non_refdata=2:EEG.nbchan-2
+            EEG.data(non_refdata) = (EEG.data(non_refdata)-((EEG.data(other_mastoid_chan_number))*.5));
         end
         
- %Adding a variable to specify the mastoid
- 
-    other_mastoid_chan_number = 1;
-         for non_refdata=1:EEG.nbchan-2
-     EEG.data(non_refdata) = (EEG.data(non_refdata)-((EEG.data(other_mastoid_chan_number))*.5));
-         end
-         
         %        Filter the data with low pass of 30
         EEG = pop_eegfilt( EEG, .1, 0, [], 0);  %high pass filter
         EEG = pop_eegfilt( EEG, 0, 30, [], 0);  %low pass filter
