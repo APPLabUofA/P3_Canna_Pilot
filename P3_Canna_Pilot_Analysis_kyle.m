@@ -5,7 +5,7 @@ ccc
 %THIS IS THE CODE USED TO PRE-PROCESS THE EEG DATA PRIOR TO PLOTTING
 
 exp = 'P3_Canna_Pilot';
-subs = {'001';'002';'003'; '005'; '006'};
+subs = {'001';'002';'003';'005'; '006'};
 %subs = {'001'}; %to test on just one sub
 
 nsubs = length(subs);
@@ -32,13 +32,21 @@ for i_sub = 1:nsubs
         EEG = eeg_checkset( EEG );
         
         % arithmetically rereference to linked mastoid
-        for non_refdata=2:EEG.nbchan
+                
+        for non_refdata=1:EEG.nbchan-2
             EEG.data(non_refdata) = (EEG.data(non_refdata)-((EEG.data(1))*.5));
         end
         
-%         %        Filter the data with low pass of 30
-%         EEG = pop_eegfilt( EEG, .1, 0, [], 0);  %high pass filter
-%         EEG = pop_eegfilt( EEG, 0, 30, [], 0);  %low pass filter
+ %Adding a variable to specify the mastoid
+ 
+    other_mastoid_chan_number = 1;
+         for non_refdata=1:EEG.nbchan-2
+     EEG.data(non_refdata) = (EEG.data(non_refdata)-((EEG.data(other_mastoid_chan_number))*.5));
+         end
+         
+        %        Filter the data with low pass of 30
+        EEG = pop_eegfilt( EEG, .1, 0, [], 0);  %high pass filter
+        EEG = pop_eegfilt( EEG, 0, 30, [], 0);  %low pass filter
         
         %change markers so they can be used by the gratton_emcp script
         for i_event = 3:length(EEG.event)

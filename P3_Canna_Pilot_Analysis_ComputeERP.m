@@ -35,7 +35,7 @@ eeglab redraw
 % [erp1ad, erp2ad, diffad, time] = pop_comperp( ALLEEG, 1, [5:6:i_sub*i_cond*2] ,[6:6:i_sub*i_cond*2],'addavg','on','addstd','off','subavg','on','diffavg','off','diffstd','off','tplotopt',{'ydir' -1});
 
 %subject erps
-electrode = 7;
+electrode = 3;
 erp_out = [];
 for i_sub = 1:nsubs
     for i_cond = 1:nconds
@@ -90,7 +90,7 @@ end
 %%
 figure('Color',[1 1 1]); 
 subplot(2,1,1);
-        electrode = 9;
+        electrode = 6;
         boundedline(EEG.times,squeeze(mean(erp_diff_out(:,electrode,1,:),4)), squeeze(std(erp_diff_out(:,electrode,1,:),[],4))./sqrt(nsubs),'b',...
                     EEG.times,squeeze(mean(erp_diff_out(:,electrode,2,:),4)), squeeze(std(erp_diff_out(:,electrode,2,:),[],4))./sqrt(nsubs),'g'); %,...
 %                     EEG.times,squeeze(mean(erp_diff_out(:,electrode,3,:),4)), squeeze(std(erp_diff_out(:,electrode,3,:),[],4))./sqrt(nsubs),'r');
@@ -110,7 +110,7 @@ subplot(2,1,1);
         xlabel('Time (ms)');
         ylabel('Voltage (uV)');
 subplot(2,1,2);
-        electrode = 7;
+        electrode = 3;
         boundedline(EEG.times,squeeze(mean(erp_diff_out(:,electrode,1,:),4)), squeeze(std(erp_diff_out(:,electrode,1,:),[],4))./sqrt(nsubs),'b',...
                     EEG.times,squeeze(mean(erp_diff_out(:,electrode,2,:),4)), squeeze(std(erp_diff_out(:,electrode,2,:),[],4))./sqrt(nsubs),'g'); %,...
 %                     EEG.times,squeeze(mean(erp_diff_out(:,electrode,3,:),4)), squeeze(std(erp_diff_out(:,electrode,3,:),[],4))./sqrt(nsubs),'r');
