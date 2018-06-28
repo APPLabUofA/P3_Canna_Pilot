@@ -1,5 +1,4 @@
-clear all
-close all
+
 ccc
 
 exp = 'P3_Canna_Pilot';
