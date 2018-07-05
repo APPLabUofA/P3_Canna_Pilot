@@ -34,7 +34,7 @@ eeglab redraw
 % [erp1ad, erp2ad, diffad, time] = pop_comperp( ALLEEG, 1, [5:6:i_sub*i_cond*2] ,[6:6:i_sub*i_cond*2],'addavg','on','addstd','off','subavg','on','diffavg','off','diffstd','off','tplotopt',{'ydir' -1});
 
 %subject erps
-electrode = 3;
+electrode = 5;
 erp_out = [];
 for i_sub = 1:nsubs
     for i_cond = 1:nconds
@@ -86,7 +86,11 @@ for i_cond = 1:2
         ylabel('Voltage (uV)');
         
 end
-%%
+
+
+%% 
+%Difference Waves at any given electrodes. 
+
 figure('Color',[1 1 1]); 
 subplot(2,1,1);
         electrode = 6;
@@ -128,7 +132,39 @@ subplot(2,1,2);
         title('Difference Wave, Pz');
         xlabel('Time (ms)');
         ylabel('Voltage (uV)');
-    %%
+        
+        %%
+%Comparing targets and standards on the same plot
+
+  
+electrode = 5;
+erp_out = [];
+for i_sub = 1:nsubs
+    for i_cond = 1:nconds
+        erp_out(:,1,:,i_cond,i_sub) = mean(ALLEEG(1+ 2*((i_sub-1)*2+(i_cond-1))).data,3)';
+        erp_out(:,2,:,i_cond,i_sub) = mean(ALLEEG(2+ 2*((i_sub-1)*2+(i_cond-1))).data,3)';
+    end
+end
+
+  figure('Color',[1 1 1]); 
+        boundedline(EEG.times,squeeze(mean(erp_out(:,1,electrode,:,:),5)),squeeze(std(erp_out(:,1,electrode,:,:),[],5))./sqrt(nsubs),'r',...
+        EEG.times,squeeze(mean(erp_out(:,2,electrode,:,:),5)),squeeze(std(erp_out(:,2,electrode,:,:),[],5))./sqrt(nsubs),'g');
+
+    
+    %EEG.times,squeeze(mean(erp_out(:,2,electrode,i_cond,:),5)),squeeze(std(erp_out(:,2,electrode,i_cond,:),[],5))./sqrt(nsubs),'k');
+        set(gca,'Color',[1 1 1]);
+        set(gca,'YDir','reverse');
+        if i_cond == 2
+            legend({'Targets', 'Standards'},'Location','SouthEast');
+        end
+        axis tight; ylim([-2.5 8]);
+        line([-200 1000],[0 0],'color','k');
+        line([0 0],[-2.5 8],'color','k');
+        title(conds{i_cond});
+        xlabel('Time (ms)');
+        ylabel('Voltage (uV)');
+  
+       %%
  %difference topographys
 time_window = find(EEG.times>250,1)-1:find(EEG.times>450,1)-2;
 figure('Color',[1 1 1]);
